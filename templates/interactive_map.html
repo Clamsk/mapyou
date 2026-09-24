@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MapYou - 福州市社区便利度个性化分析</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header .brand-name {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: normal;
+            opacity: 0.95;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            display: flex;
+            min-height: calc(100vh - 200px);
+        }
+        
+        .sidebar {
+            width: 400px;
+            background: #f8f9fa;
+            padding: 25px;
+            overflow-y: auto;
+            border-right: 2px solid #e0e0e0;
+        }
+        
+        .map-container {
+            flex: 1;
+            padding: 25px;
+            background: white;
+        }
+        
+        .section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 18px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .form-group input[type="number"],
+        .form-group input[type="range"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .slider-container {
+            margin-bottom: 15px;
+        }
+        
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .slider-label .category {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .slider-label .value {
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            background: #e0e0e0;
+            outline: none;
+            border-radius: 3px;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #667eea;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            background: #667eea;
+            cursor: pointer;
+            border-radius: 50%;
+            border: none;
+        }
+        
+        .btn-calculate {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+        }
+        
+        .btn-calculate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-calculate:active {
+            transform: translateY(0);
+        }
+        
+        .btn-calculate:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-reset {
+            width: 100%;
+            padding: 12px;
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 10px;
+        }
+        
+        .btn-reset:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        #map-display {
+            width: 100%;
+            height: calc(100vh - 250px);
+            min-height: 600px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 18px;
+        }
+        
+        #map-display iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 10px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        
+        .preset-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .btn-preset {
+            padding: 8px;
+            background: #f0f0f0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        
+        .btn-preset:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .leg-length-info {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+        
+        .leg-length-info .distance {
+            font-weight: bold;
+            color: #f57c00;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="brand-name">MapYou</div>
+            <h1>福州市社区便利度个性化分析</h1>
+            <p>自定义腿长和设施权重，生成专属的社区便利度地图</p>
+        </div>
+        
+        <div class="content">
+            <!-- 左侧控制面板 -->
+            <div class="sidebar">
+                <!-- 腿长设置 -->
+                <div class="section">
+                    <h3>📏 腿长设置</h3>
+                    <div class="info-box">
+                        根据弗劳德数公式计算步行速度和距离。成人平均腿长约0.85米。
+                    </div>
+                    <div class="form-group">
+                        <label for="leg-length">腿长 (米)</label>
+                        <input type="number" id="leg-length" min="0.5" max="1.2" step="0.01" value="0.85">
+                    </div>
+                    <div class="leg-length-info">
+                        <div>15分钟步行距离: <span class="distance" id="walking-distance">~</span> 米</div>
+                        <div style="margin-top: 5px; font-size: 11px; color: #666;">
+                            公式: 距离 = 0.42 × √(腿长×9.8) × 900秒
+                        </div>
+                    </div>
+                    <div class="preset-buttons">
+                        <button class="btn-preset" onclick="setLegLength(0.70)">儿童 (0.70m)</button>
+                        <button class="btn-preset" onclick="setLegLength(0.85)">成人 (0.85m)</button>
+                        <button class="btn-preset" onclick="setLegLength(1.00)">高个 (1.00m)</button>
+                        <button class="btn-preset" onclick="setLegLength(1.15)">特高 (1.15m)</button>
+                    </div>
+                </div>
+                
+                <!-- 设施权重设置 -->
+                <div class="section">
+                    <h3>⚖️ 设施权重</h3>
+                    <div class="info-box">
+                        调整权重表示该类设施对你的重要程度。权重越高，影响越大。
+                    </div>
+                    
+                    {% for category, config in categories.items() %}
+                    <div class="slider-container">
+                        <div class="slider-label">
+                            <span class="category">{{ category }}</span>
+                            <span class="value" id="weight-{{ category }}-value">{{ config.default_weight }}</span>
+                        </div>
+                        <input type="range" 
+                               id="weight-{{ category }}" 
+                               min="0" 
+                               max="3" 
+                               step="0.1" 
+                               value="{{ config.default_weight }}"
+                               oninput="updateWeightValue('{{ category }}', this.value)">
+                    </div>
+                    {% endfor %}
+                    
+                    <div class="preset-buttons">
+                        <button class="btn-preset" onclick="setPresetWeights('均衡')">均衡模式</button>
+                        <button class="btn-preset" onclick="setPresetWeights('生活')">生活优先</button>
+                        <button class="btn-preset" onclick="setPresetWeights('健康')">健康优先</button>
+                        <button class="btn-preset" onclick="setPresetWeights('教育')">教育优先</button>
+                    </div>
+                </div>
+                
+                <!-- 操作按钮 -->
+                <button class="btn-calculate" onclick="calculateMap()" id="btn-calculate">
+                    🚀 生成专属地图
+                </button>
+                <button class="btn-reset" onclick="resetSettings()">
+                    🔄 重置为默认值
+                </button>
+            </div>
+            
+            <!-- 右侧地图显示 -->
+            <div class="map-container">
+                <div id="map-display">
+                    <div>
+                        <p style="font-size: 24px; margin-bottom: 10px;">👈</p>
+                        <p>设置参数后点击"生成专属地图"按钮</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 更新权重显示值
+        function updateWeightValue(category, value) {
+            document.getElementById(`weight-${category}-value`).textContent = parseFloat(value).toFixed(1);
+        }
+        
+        // 更新步行距离显示
+        function updateWalkingDistance() {
+            const legLength = parseFloat(document.getElementById('leg-length').value);
+            const g = 9.8;
+            const FS = Math.sqrt(legLength * g);
+            const TPWS = 0.42 * FS;
+            const distance = TPWS * 15 * 60;
+            document.getElementById('walking-distance').textContent = Math.round(distance);
+        }
+        
+        // 设置腿长
+        function setLegLength(length) {
+            document.getElementById('leg-length').value = length;
+            updateWalkingDistance();
+        }
+        
+        // 预设权重方案
+        function setPresetWeights(mode) {
+            const presets = {
+                '均衡': {'餐饮': 1.0, '超市': 1.0, '医疗': 1.0, '教育': 1.0, '交通': 1.0, '休闲': 1.0, '公园': 1.0, '金融': 1.0},
+                '生活': {'餐饮': 2.0, '超市': 2.5, '医疗': 1.5, '教育': 0.5, '交通': 2.0, '休闲': 0.5, '公园': 0.5, '金融': 2.5},
+                '健康': {'餐饮': 1.0, '超市': 1.5, '医疗': 3.0, '教育': 0.5, '交通': 1.0, '休闲': 2.5, '公园': 2.5, '金融': 1.0},
+                '教育': {'餐饮': 1.0, '超市': 1.5, '医疗': 2.0, '教育': 3.0, '交通': 2.0, '休闲': 1.5, '公园': 1.5, '金融': 1.0}
+            };
+            
+            const weights = presets[mode];
+            for (let category in weights) {
+                const slider = document.getElementById(`weight-${category}`);
+                if (slider) {
+                    slider.value = weights[category];
+                    updateWeightValue(category, weights[category]);
+                }
+            }
+        }
+        
+        // 重置设置
+        function resetSettings() {
+            setLegLength(0.85);
+            setPresetWeights('均衡');
+        }
+        
+        // 计算地图
+        async function calculateMap() {
+            console.log('开始计算地图...');
+            
+            const btn = document.getElementById('btn-calculate');
+            const mapDisplay = document.getElementById('map-display');
+            
+            // 禁用按钮
+            btn.disabled = true;
+            btn.textContent = '⏳ 计算中...';
+            
+            // 显示加载状态
+            mapDisplay.innerHTML = `
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>正在计算便利度...</p>
+                    <p style="font-size: 14px; color: #999; margin-top: 10px;">
+                        这可能需要1-2分钟，请耐心等待
+                    </p>
+                </div>
+            `;
+            
+            // 收集参数
+            const legLength = parseFloat(document.getElementById('leg-length').value);
+            console.log('腿长:', legLength);
+            
+            const weights = {};
+            {% for category in categories.keys() %}
+            weights['{{ category }}'] = parseFloat(document.getElementById('weight-{{ category }}').value);
+            {% endfor %}
+            console.log('权重:', weights);
+            
+            // 构建请求数据
+            const requestData = {
+                leg_length: legLength,
+                ...Object.fromEntries(
+                    Object.entries(weights).map(([k, v]) => [`weight_${k}`, v])
+                )
+            };
+            console.log('请求数据:', requestData);
+            
+            // 发送请求
+            try {
+                console.log('发送POST请求到/calculate...');
+                const response = await fetch('/calculate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestData)
+                });
+                
+                console.log('收到响应:', response.status);
+                const result = await response.json();
+                console.log('解析结果:', result.success);
+                
+                if (result.success) {
+                    console.log('显示地图...');
+                    // 显示地图
+                    mapDisplay.innerHTML = result.map_html;
+                } else {
+                    console.error('计算失败:', result.error);
+                    mapDisplay.innerHTML = `
+                        <div style="color: #f44336; text-align: center;">
+                            <p style="font-size: 24px;">❌</p>
+                            <p>计算失败: ${result.error}</p>
+                            <p style="font-size: 14px; margin-top: 10px;">请检查服务器日志</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('网络错误:', error);
+                mapDisplay.innerHTML = `
+                    <div style="color: #f44336; text-align: center;">
+                        <p style="font-size: 24px;">❌</p>
+                        <p>网络错误: ${error.message}</p>
+                        <p style="font-size: 14px; margin-top: 10px;">请检查浏览器控制台（F12）</p>
+                    </div>
+                `;
+            } finally {
+                // 恢复按钮
+                btn.disabled = false;
+                btn.textContent = '🚀 生成专属地图';
+                console.log('计算流程结束');
+            }
+        }
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            updateWalkingDistance();
+            document.getElementById('leg-length').addEventListener('input', updateWalkingDistance);
+        });
+    </script>
+</body>
+</html>
