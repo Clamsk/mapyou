@@ -1,0 +1,145 @@
+[
+  {
+    "source": "baidu_poi_crawler.py",
+    "published": "baidu_poi_crawler.py",
+    "changes": [
+      "Whitespace normalization only"
+    ],
+    "source_sha256": "9ce1058d65aa504f915cb150416bb2c6a3075800adc10c71b923b568fec9259a"
+  },
+  {
+    "source": "build_exe.py",
+    "published": "build_exe.py",
+    "changes": [
+      "Whitespace normalization only"
+    ],
+    "source_sha256": "30a7f96c75dbb0fa64192a4421c4f9669c4934ae64368b233bbba0d928b6b542"
+  },
+  {
+    "source": "convert_bd09_to_wgs84.py",
+    "published": "convert_bd09_to_wgs84.py",
+    "changes": [
+      "Whitespace normalization only"
+    ],
+    "source_sha256": "64149a6fe4013eb179f0bad37a9ba67669c85fff8e1d4de713c9304abeced53d"
+  },
+  {
+    "source": "get_fuzhou_poi.py",
+    "published": "get_fuzhou_poi.py",
+    "changes": [
+      "API credential replaced with BAIDU_MAP_AK environment variable"
+    ],
+    "source_sha256": "537512570e58b147ab147d9536eb91bdf8fafc8d720836e42f6b2ff9846da6df"
+  },
+  {
+    "source": "get_gulou_poi_test.py",
+    "published": "get_gulou_poi_test.py",
+    "changes": [
+      "API credential replaced with BAIDU_MAP_AK environment variable",
+      "Boundary path moved to MAPYOU_BOUNDARY"
+    ],
+    "source_sha256": "177607fb347ac203f13ed12a1993664b1458c6881b2e193b157fdfe389117397"
+  },
+  {
+    "source": "MapYou_启动器.py",
+    "published": "MapYou_启动器.py",
+    "changes": [
+      "Whitespace normalization only"
+    ],
+    "source_sha256": "9a5a9382ac1ad80cfa87b77736effebb73768ce3715d781963c05af697edb99b"
+  },
+  {
+    "source": "poi_crawler_gui - 2.0.py",
+    "published": "poi_crawler_gui - 2.0.py",
+    "changes": [
+      "Whitespace normalization only"
+    ],
+    "source_sha256": "0ee94f6d25f7e4a8120868c1e14d52915dc9b82f0381dbf5b7b7b73c958580ca"
+  },
+  {
+    "source": "poi_crawler_gui.py",
+    "published": "poi_crawler_gui.py",
+    "changes": [
+      "Whitespace normalization only"
+    ],
+    "source_sha256": "b0867c5f72dc085cfdd940221ec410c4f9252d4cf5e261ff9d01963d3b0b5445"
+  },
+  {
+    "source": "交互式便利度地图_快速版.py",
+    "published": "交互式便利度地图_快速版.py",
+    "changes": [
+      "Whitespace normalization only"
+    ],
+    "source_sha256": "ee37488d427eb5cd215664481e17f91fd92000621e25a27c9f2ef7dcaa812de8"
+  },
+  {
+    "source": "交互式便利度地图_服务器.py",
+    "published": "交互式便利度地图_服务器.py",
+    "changes": [
+      "Whitespace normalization only"
+    ],
+    "source_sha256": "bac5d92f1d1900549502df0fcaffb438a7f6d04e74e7766a164907ddcbdf8daa"
+  },
+  {
+    "source": "测试交互式地图.py",
+    "published": "测试交互式地图.py",
+    "changes": [
+      "Whitespace normalization only"
+    ],
+    "source_sha256": "b00a1314c6ee875d084fefcbf4c10939559aef2ea4a4fb3b262507dd34d9162e"
+  },
+  {
+    "source": "测试路网加载.py",
+    "published": "测试路网加载.py",
+    "changes": [
+      "Whitespace normalization only"
+    ],
+    "source_sha256": "6867b81c436e3537f5e2c1d240d5e8e646b78fc4c6ae94055e59276355eabfee"
+  },
+  {
+    "source": "设施便利度_空间聚类分析.py",
+    "published": "设施便利度_空间聚类分析.py",
+    "changes": [
+      "Local dataset root made configurable"
+    ],
+    "source_sha256": "d08eea9932118265ea939d6c27719c999b784e87115c5db2f96b6f8f3695561c"
+  },
+  {
+    "source": "设施可达性分析.py",
+    "published": "设施可达性分析.py",
+    "changes": [
+      "Local dataset root made configurable"
+    ],
+    "source_sha256": "76b82b881065229b78113fb4547340ac2c1938661e5cc95bcc3cbb4189d46cf0"
+  },
+  {
+    "source": "设施可达性分析_弗劳德数.py",
+    "published": "设施可达性分析_弗劳德数.py",
+    "changes": [
+      "Local dataset root made configurable"
+    ],
+    "source_sha256": "1b36db13d21258473b46e40383e928b251b633b85bfd472ffe562f3b5e9cfa87"
+  },
+  {
+    "source": "设施可达性分析_直线距离.py",
+    "published": "设施可达性分析_直线距离.py",
+    "changes": [
+      "Local dataset root made configurable"
+    ],
+    "source_sha256": "4562f28b12ce690476d63b007218ee2075747ea8e8c609cbb21a251c4c95ed57"
+  },
+  {
+    "source": "成果/报告.docx",
+    "published": "reports/course-report.docx",
+    "changes": [
+      "Student IDs removed; creator/lastModifiedBy metadata cleared; visible author names retained"
+    ]
+  },
+  {
+    "source": "汇报/5.pptx",
+    "published": "reports/course-presentation.pptx",
+    "changes": [
+      "Student IDs removed; creator/lastModifiedBy metadata cleared; visible author names retained"
+    ]
+  }
+]
